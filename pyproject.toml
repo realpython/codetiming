@@ -1,0 +1,36 @@
+[build-system]
+requires = ["flit"]
+build-backend = "flit.buildapi"
+
+[tool.flit.metadata]
+module = "codetiming"
+author = "Real Python"
+author-email = "info@realpython.com"
+home-page = "https://realpython.com/"
+description-file = "README.md"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Operating System :: MacOS",
+    "Operating System :: Microsoft",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Topic :: Education",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: System :: Monitoring",
+    "Typing :: Typed",
+]
+keywords = "timer class contextmanager decorator"
+
+# Requirements
+requires-python    = ">=3.6"
+requires           = []
+
+
+[tool.flit.metadata.requires-extra]
+dev                = ["black", "bumpversion", "flake8", "flit", "mypy"]
+test               = ["pytest", "pytest-cov", "tox"]
+
