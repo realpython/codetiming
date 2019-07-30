@@ -27,7 +27,9 @@ keywords = "timer class contextmanager decorator"
 
 # Requirements
 requires-python    = ">=3.6"
-requires           = []
+requires           = [
+    "dataclasses; python_version < '3.7'",
+]
 
 
 [tool.flit.metadata.requires-extra]
