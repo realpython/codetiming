@@ -32,6 +32,10 @@ requires           = [
 ]
 
 
+[tool.flit.metadata.urls]
+"Source Code" = "https://github.com/realpython/codetiming"
+
+
 [tool.flit.metadata.requires-extra]
 dev                = ["black", "bumpversion", "flake8", "flit", "mypy"]
 test               = ["pytest", "pytest-cov", "tox"]
