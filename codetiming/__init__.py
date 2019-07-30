@@ -32,7 +32,7 @@ from dataclasses import dataclass, field
 import time
 from typing import Any, Callable, ClassVar, Dict, Optional
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 
 class TimerError(Exception):
