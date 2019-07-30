@@ -8,6 +8,7 @@ $ python -m pip install codetiming
 
 The source code is [available at GitHub](https://github.com/realpython/codetiming).
 
+
 ## Basic Usage
 
 You can use `codetiming.Timer` in several different ways:
@@ -35,6 +36,7 @@ You can use `codetiming.Timer` in several different ways:
     def stuff():
         # Do something
     ```
+
 
 ## Arguments
 
@@ -75,3 +77,8 @@ WARNING:root:Time spent: 1.73
 ```
 
 The example shows how you can redirect the timer output to the logging module. Note that the elapsed time spent in the two different uses of `t` has been accumulated in `Timer.timers`.
+
+
+## Acknowledgements
+
+`codetiming` is based on a similar module originally developed for the [Midgard Geodesy library](https://kartverket.github.io/midgard/) at the [Norwegian Mapping Authority](https://www.kartverket.no/en/).
