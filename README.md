@@ -2,7 +2,7 @@
 
 [![Latest version](https://img.shields.io/pypi/v/codetiming.svg)](https://pypi.org/project/codetiming/)
 [![Python versions](https://img.shields.io/pypi/pyversions/codetiming.svg)](https://pypi.org/project/codetiming/)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Checked with mypy](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/)
 [![CircleCI](https://circleci.com/gh/realpython/codetiming.svg?style=shield)](https://circleci.com/gh/realpython/codetiming)
 
