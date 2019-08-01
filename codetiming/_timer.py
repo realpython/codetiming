@@ -1,7 +1,7 @@
 """Definition of Timer
 
 See help(codetiming) for quick instructions, and
-https://pypi.org/project/codetiming/ for more details 
+https://pypi.org/project/codetiming/ for more details.
 """
 
 # Standard library imports
