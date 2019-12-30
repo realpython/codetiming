@@ -6,10 +6,10 @@ build-backend = "flit_core.buildapi"
 module = "codetiming"
 author = "Real Python"
 author-email = "info@realpython.com"
-home-page = "https://realpython.com/"
+home-page = "https://realpython.com/python-timer"
 description-file = "README.md"
 classifiers = [
-    "Development Status :: 4 - Beta",
+    "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Natural Language :: English",
@@ -35,7 +35,7 @@ requires           = [
 
 [tool.flit.metadata.urls]
 "Source Code" = "https://github.com/realpython/codetiming"
-
+"Tutorial" = "https://realpython.com/python-timer"
 
 [tool.flit.metadata.requires-extra]
 dev                = ["black", "bump2version", "flake8", "flit", "mypy"]
