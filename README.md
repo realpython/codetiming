@@ -1,3 +1,5 @@
+[![Python Timer Functions: Three Ways to Monitor Your Code](https://files.realpython.com/media/Three-Ways-to-Time-Your-Code_Watermarked.8d561fcc7a35.jpg)](https://realpython.com/python-timer)
+
 # `codetiming` - A flexible, customizable timer for your Python code
 
 [![Latest version](https://img.shields.io/pypi/v/codetiming.svg)](https://pypi.org/project/codetiming/)
@@ -14,6 +16,7 @@ $ python -m pip install codetiming
 
 The source code is [available at GitHub](https://github.com/realpython/codetiming).
 
+For a complete tutorial on how `codetiming` works, see [Python Timer Functions: Three Ways to Monitor Your Code](https://realpython.com/python-timer) on [Real Python](https://realpython.com/).
 
 ## Basic Usage
 
