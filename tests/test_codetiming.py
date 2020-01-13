@@ -168,23 +168,11 @@ def test_error_if_restarting_running_timer():
         t.start()
 
 
-def test_timer_compares_to_numbers():
+def test_timer_sets_last():
     t = Timer()
+    assert isnan(t.last)
     t.start()
     time.sleep(0.1)
     t.stop()
 
-    assert t > 0.1 and t >= 0.1
-    assert t < 1 and t <= 1
-
-
-def test_timer_compares_false_before_starting():
-    t = Timer()
-
-    assert isnan(t._value)
-
-    assert not t == 0
-    assert not t <= 1
-    assert not t < 1
-    assert not t >= 0
-    assert not t > 0
+    assert 0.1 < t.last < 1

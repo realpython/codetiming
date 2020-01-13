@@ -25,7 +25,7 @@ class Timer(ContextDecorator):
     text: str = "Elapsed time: {:0.4f} seconds"
     logger: Optional[Callable[[str], None]] = print
     _start_time: Optional[float] = field(default=None, init=False, repr=False)
-    _value: Optional[float] = field(default=nan, init=False, repr=False)
+    last: float = field(default=nan, init=False, repr=False)
 
     def __post_init__(self) -> None:
         """Initialization: add timer to dict of timers"""
@@ -45,17 +45,16 @@ class Timer(ContextDecorator):
             raise TimerError(f"Timer is not running. Use .start() to start it")
 
         # Calculate elapsed time
-        elapsed_time = time.perf_counter() - self._start_time
-        self._value = elapsed_time
+        self.last = time.perf_counter() - self._start_time
         self._start_time = None
 
         # Report elapsed time
         if self.logger:
-            self.logger(self.text.format(elapsed_time))
+            self.logger(self.text.format(self.last))
         if self.name:
-            self.timers[self.name] += elapsed_time
+            self.timers[self.name] += self.last
 
-        return elapsed_time
+        return self.last
 
     def __enter__(self) -> "Timer":
         """Start a new timer as a context manager"""
@@ -65,18 +64,3 @@ class Timer(ContextDecorator):
     def __exit__(self, *exc_info: Any) -> None:
         """Stop the context manager timer"""
         self.stop()
-
-    def __eq__(self, other):
-        return self._value == other
-
-    def __lt__(self, other):
-        return self._value < other
-
-    def __le__(self, other):
-        return self._value <= other
-
-    def __gt__(self, other):
-        return self._value > other
-
-    def __ge__(self, other):
-        return self._value >= other
