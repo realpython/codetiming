@@ -39,6 +39,15 @@ requires           = [
 "Tutorial" = "https://realpython.com/python-timer"
 
 [tool.flit.metadata.requires-extra]
-dev                = ["black", "bump2version", "flake8", "flit", "mypy"]
+dev                = ["black", "bump2version", "flake8", "flit", "isort", "mypy"]
 test               = ["pytest", "pytest-cov", "tox"]
 
+[tool.isort]
+multi_line_output             = 3
+include_trailing_comma        = true
+force_grid_wrap               = 0
+use_parentheses               = true
+line_length                   = 88
+import_heading_stdlib         = "Standard library imports"
+import_heading_thirdparty     = "Third party imports"
+import_heading_firstparty     = "Codetiming imports"
