@@ -174,4 +174,4 @@ def test_timer_sets_last():
     time.sleep(0.1)
     t.stop()
 
-    assert 0.1 < t.last < 1
+    assert 0.1 <= t.last
