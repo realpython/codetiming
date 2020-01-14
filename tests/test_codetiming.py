@@ -4,13 +4,14 @@ Based on the Pytest test runner
 """
 # Standard library imports
 import re
+import time
+from math import isnan
 
 # Third party imports
 import pytest
 
 # Codetiming imports
 from codetiming import Timer, TimerError
-
 
 #
 # Test functions
@@ -164,3 +165,13 @@ def test_error_if_restarting_running_timer():
     t.start()
     with pytest.raises(TimerError):
         t.start()
+
+
+def test_timer_sets_last():
+    t = Timer()
+    assert isnan(t.last)
+    t.start()
+    time.sleep(0.1)
+    t.stop()
+
+    assert 0.1 <= t.last
