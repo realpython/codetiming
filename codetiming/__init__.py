@@ -21,7 +21,7 @@ You can use `codetiming.Timer` in several different ways:
         # Do something
 """
 
-# Import Timer for cleaner namespace
+# Codetiming imports
 from codetiming._timer import Timer, TimerError  # noqa
 
 # Versioning is handled by bump2version

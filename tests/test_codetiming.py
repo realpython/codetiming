@@ -3,9 +3,9 @@
 Based on the Pytest test runner
 """
 # Standard library imports
+import math
 import re
 import time
-from math import isnan
 
 # Third party imports
 import pytest
@@ -167,11 +167,15 @@ def test_error_if_restarting_running_timer():
         t.start()
 
 
-def test_timer_sets_last():
+def test_last_starts_as_nan():
+    """Test that .last attribute is initialized as nan"""
     t = Timer()
-    assert isnan(t.last)
-    t.start()
-    time.sleep(0.1)
-    t.stop()
+    assert math.isnan(t.last)
 
-    assert 0.1 <= t.last
+
+def test_timer_sets_last():
+    """Test that .last attribute is properly set"""
+    with Timer() as t:
+        time.sleep(0.02)
+
+    assert t.last >= 0.02

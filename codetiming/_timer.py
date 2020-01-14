@@ -5,10 +5,10 @@ https://pypi.org/project/codetiming/ for more details.
 """
 
 # Standard library imports
+import math
 import time
 from contextlib import ContextDecorator
 from dataclasses import dataclass, field
-from math import nan
 from typing import Any, Callable, ClassVar, Dict, Optional
 
 
@@ -21,11 +21,11 @@ class Timer(ContextDecorator):
     """Time your code using a class, context manager, or decorator"""
 
     timers: ClassVar[Dict[str, float]] = dict()
+    _start_time: Optional[float] = field(default=None, init=False, repr=False)
     name: Optional[str] = None
     text: str = "Elapsed time: {:0.4f} seconds"
     logger: Optional[Callable[[str], None]] = print
-    _start_time: Optional[float] = field(default=None, init=False, repr=False)
-    last: float = field(default=nan, init=False, repr=False)
+    last: float = field(default=math.nan, init=False, repr=False)
 
     def __post_init__(self) -> None:
         """Initialization: add timer to dict of timers"""
