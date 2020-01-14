@@ -1,18 +1,18 @@
 version: 2
 
 shared: &shared
-    working_directory: ~/circleci-codetiming
-    steps:
-      - checkout
-      - run:
-          name: Install
-          command: |
-            python -m pip install flit --user
-            python -m flit install --deps=develop
-      - run:
-          name: Test
-          command: |
-            python -m tox --recreate
+  working_directory: ~/circleci-codetiming
+  steps:
+    - checkout
+    - run:
+        name: Install
+        command: |
+          python -m pip install flit --user
+          python -m flit install --deps=develop
+    - run:
+        name: Test
+        command: |
+          python -m tox --recreate
 
 jobs:
   "test-py36":
@@ -28,8 +28,12 @@ jobs:
   "test-py38":
     <<: *shared
     docker:
-      - image: circleci/python:3.8-rc
+      - image: circleci/python:3.8
 
+  "test-py39":
+    <<: *shared
+    docker:
+      - image: circleci/python:3.9-rc
 
 workflows:
   version: 2
@@ -39,3 +43,4 @@ workflows:
       - "test-py36"
       - "test-py37"
       - "test-py38"
+      - "test-py39"
