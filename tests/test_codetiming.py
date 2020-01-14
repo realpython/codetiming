@@ -4,15 +4,14 @@ Based on the Pytest test runner
 """
 # Standard library imports
 import re
+import time
+from math import isnan
 
 # Third party imports
 import pytest
 
 # Codetiming imports
 from codetiming import Timer, TimerError
-import time
-from math import isnan
-
 
 #
 # Test functions
