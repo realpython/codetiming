@@ -5,10 +5,10 @@ https://pypi.org/project/codetiming/ for more details.
 """
 
 # Standard library imports
+import time
 from contextlib import ContextDecorator
 from dataclasses import dataclass, field
 from math import nan
-import time
 from typing import Any, Callable, ClassVar, Dict, Optional
 
 
