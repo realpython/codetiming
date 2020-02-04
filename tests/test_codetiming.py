@@ -21,14 +21,19 @@ TIME_MESSAGE = f"{TIME_PREFIX} {{:.4f}} seconds"
 RE_TIME_MESSAGE = re.compile(TIME_PREFIX + r" 0\.\d{4} seconds")
 
 
+def waste_time(num=1000):
+    """Just waste a little bit of time"""
+    sum(n ** 2 for n in range(num))
+
+
 @Timer(text=TIME_MESSAGE)
-def timewaster(num):
+def decorated_timewaste(num=1000):
     """Just waste a little bit of time"""
     sum(n ** 2 for n in range(num))
 
 
 @Timer(name="accumulator", text=TIME_MESSAGE)
-def accumulated_timewaste(num):
+def accumulated_timewaste(num=1000):
     """Just waste a little bit of time"""
     sum(n ** 2 for n in range(num))
 
@@ -48,7 +53,7 @@ class CustomLogger:
 #
 def test_timer_as_decorator(capsys):
     """Test that decorated function prints timing information"""
-    timewaster(1000)
+    decorated_timewaste()
     stdout, stderr = capsys.readouterr()
     assert RE_TIME_MESSAGE.match(stdout)
     assert stdout.count("\n") == 1
@@ -58,7 +63,7 @@ def test_timer_as_decorator(capsys):
 def test_timer_as_context_manager(capsys):
     """Test that timed context prints timing information"""
     with Timer(text=TIME_MESSAGE):
-        sum(n ** 2 for n in range(1000))
+        waste_time()
     stdout, stderr = capsys.readouterr()
     assert RE_TIME_MESSAGE.match(stdout)
     assert stdout.count("\n") == 1
@@ -69,7 +74,7 @@ def test_explicit_timer(capsys):
     """Test that timed section prints timing information"""
     t = Timer(text=TIME_MESSAGE)
     t.start()
-    sum(n ** 2 for n in range(1000))
+    waste_time()
     t.stop()
     stdout, stderr = capsys.readouterr()
     assert RE_TIME_MESSAGE.match(stdout)
@@ -96,14 +101,14 @@ def test_custom_logger():
     """Test that we can use a custom logger"""
     logger = CustomLogger()
     with Timer(text=TIME_MESSAGE, logger=logger):
-        sum(n ** 2 for n in range(1000))
+        waste_time()
     assert RE_TIME_MESSAGE.match(logger.messages)
 
 
 def test_timer_without_text(capsys):
     """Test that timer with logger=None does not print anything"""
     with Timer(logger=None):
-        sum(n ** 2 for n in range(1000))
+        waste_time()
 
     stdout, stderr = capsys.readouterr()
     assert stdout == ""
@@ -112,8 +117,8 @@ def test_timer_without_text(capsys):
 
 def test_accumulated_decorator(capsys):
     """Test that decorated timer can accumulate"""
-    accumulated_timewaste(1000)
-    accumulated_timewaste(1000)
+    accumulated_timewaste()
+    accumulated_timewaste()
 
     stdout, stderr = capsys.readouterr()
     lines = stdout.strip().split("\n")
@@ -127,9 +132,9 @@ def test_accumulated_context_manager(capsys):
     """Test that context manager timer can accumulate"""
     t = Timer(name="accumulator", text=TIME_MESSAGE)
     with t:
-        sum(n ** 2 for n in range(1000))
+        waste_time()
     with t:
-        sum(n ** 2 for n in range(1000))
+        waste_time()
 
     stdout, stderr = capsys.readouterr()
     lines = stdout.strip().split("\n")
@@ -144,10 +149,10 @@ def test_accumulated_explicit_timer(capsys):
     t = Timer(name="accumulated_explicit_timer", text=TIME_MESSAGE)
     total = 0
     t.start()
-    sum(n ** 2 for n in range(1000))
+    waste_time()
     total += t.stop()
     t.start()
-    sum(n ** 2 for n in range(1000))
+    waste_time()
     total += t.stop()
 
     stdout, stderr = capsys.readouterr()
@@ -179,3 +184,57 @@ def test_timer_sets_last():
         time.sleep(0.02)
 
     assert t.last >= 0.02
+
+
+def test_timers_cleared():
+    """Test that timers can be cleared"""
+    with Timer(name="timer_to_be_cleared"):
+        waste_time()
+
+    assert "timer_to_be_cleared" in Timer.timers
+    Timer.timers.clear()
+    assert not Timer.timers
+
+
+def test_running_cleared_timers():
+    """Test that timers can still be run after they're cleared"""
+    t = Timer(name="timer_to_be_cleared")
+    Timer.timers.clear()
+
+    accumulated_timewaste()
+    with t:
+        waste_time()
+
+    assert "accumulator" in Timer.timers
+    assert "timer_to_be_cleared" in Timer.timers
+
+
+def test_timers_stats():
+    """Test that we can get basic statistics from timers"""
+    name = "timer_with_stats"
+    t = Timer(name=name)
+    for num in range(5, 10):
+        with t:
+            waste_time(num=100 * num)
+
+    stats = Timer.timers
+    assert stats.total(name) == stats[name]
+    assert stats.count(name) == 5
+    assert stats.min(name) <= stats.median(name) <= stats.max(name)
+    assert stats.mean(name) >= stats.min(name)
+    assert stats.stdev(name) >= 0
+
+
+def test_stats_missing_timers():
+    """Test that getting statistics from non-existent timers raises exception"""
+    with pytest.raises(KeyError):
+        Timer.timers.count("non_existent_timer")
+
+    with pytest.raises(KeyError):
+        Timer.timers.stdev("non_existent_timer")
+
+
+def test_setting_timers_exception():
+    """Test that setting .timers items raises exception"""
+    with pytest.raises(TypeError):
+        Timer.timers["set_timer"] = 1.23
