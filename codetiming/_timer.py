@@ -11,6 +11,7 @@ from contextlib import ContextDecorator
 from dataclasses import dataclass, field
 from typing import Any, Callable, ClassVar, Optional
 
+# Codetiming imports
 from codetiming._timers import Timers
 
 

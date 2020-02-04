@@ -4,7 +4,7 @@
 import collections
 import math
 import statistics
-from typing import Any, Callable, Dict, List, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Callable, Dict, List
 
 # Annotate generic UserDict
 if TYPE_CHECKING:
