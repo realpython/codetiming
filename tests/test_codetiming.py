@@ -225,18 +225,6 @@ def test_timers_stats():
     assert stats.stdev(name) >= 0
 
 
-def test_stats_all_timers():
-    """Test that we can get stats dictionaries from timers"""
-    Timer.timers.clear()
-    for num in range(5, 10):
-        with Timer(name=f"timer_{num}"):
-            waste_time(num=100 * num)
-
-    stats = Timer.timers
-    assert isinstance(stats.total(), dict)
-    assert len(stats.stdev()) == 5
-
-
 def test_stats_missing_timers():
     """Test that getting statistics from non-existent timers raises exception"""
     with pytest.raises(KeyError):

@@ -9,7 +9,7 @@ import math
 import time
 from contextlib import ContextDecorator
 from dataclasses import dataclass, field
-from typing import Any, Callable, ClassVar, Dict, Optional
+from typing import Any, Callable, ClassVar, Optional
 
 from codetiming._timers import Timers
 
@@ -22,17 +22,12 @@ class TimerError(Exception):
 class Timer(ContextDecorator):
     """Time your code using a class, context manager, or decorator"""
 
-    timers: ClassVar[Dict[str, float]] = Timers()
+    timers: ClassVar[Timers] = Timers()
     _start_time: Optional[float] = field(default=None, init=False, repr=False)
     name: Optional[str] = None
     text: str = "Elapsed time: {:0.4f} seconds"
     logger: Optional[Callable[[str], None]] = print
     last: float = field(default=math.nan, init=False, repr=False)
-
-    def __post_init__(self) -> None:
-        """Initialization: add timer to dict of timers"""
-        # if self.name:
-        #     self.timers.setdefault(self.name, 0)
 
     def start(self) -> None:
         """Start a new timer"""

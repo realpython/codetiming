@@ -4,10 +4,16 @@
 import collections
 import math
 import statistics
-from typing import Any, Callable, Dict, List, Optional
+from typing import Any, Callable, Dict, List, TYPE_CHECKING
+
+# Annotate generic UserDict
+if TYPE_CHECKING:
+    UserDict = collections.UserDict[str, float]  # pragma: no cover
+else:
+    UserDict = collections.UserDict
 
 
-class Timers(collections.UserDict):
+class Timers(UserDict):
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         """Add a private dictionary keeping track of all timings"""
         super().__init__(*args, **kwargs)
@@ -31,47 +37,38 @@ class Timers(collections.UserDict):
             "Use '.add()' to update values."
         )
 
-    def apply(
-        self, func: Callable[[List[float]], float], name: Optional[str] = None
-    ) -> float:
-        """Apply function to timings"""
-        if name is None:
-            return {k: func(v) for k, v in self._timings.items()}
+    def apply(self, func: Callable[[List[float]], float], name: str) -> float:
+        """Apply a function to the results of one named timer"""
         if name in self._timings:
             return func(self._timings[name])
         raise KeyError(name)
 
-    def count(self, name: Optional[str] = None) -> float:
+    def count(self, name: str) -> float:
         """Number of timings"""
         return self.apply(len, name=name)
 
-    def total(self, name: Optional[str] = None) -> float:
+    def total(self, name: str) -> float:
         """Total time for timers"""
         return self.apply(sum, name=name)
 
-    def min(self, name=None):
+    def min(self, name: str) -> float:
         """Minimal value of timings"""
         return self.apply(lambda values: min(values or [0]), name=name)
 
-    def max(self, name=None):
+    def max(self, name: str) -> float:
         """Maximal value of timings"""
         return self.apply(lambda values: max(values or [0]), name=name)
 
-    def mean(self, name=None):
+    def mean(self, name: str) -> float:
         """Mean value of timings"""
         return self.apply(lambda values: statistics.mean(values or [0]), name=name)
 
-    def median(self, name=None):
+    def median(self, name: str) -> float:
         """Median value of timings"""
         return self.apply(lambda values: statistics.median(values or [0]), name=name)
 
-    def stdev(self, name=None):
+    def stdev(self, name: str) -> float:
         """Standard deviation of timings"""
-        if name is None:
-            return {
-                k: statistics.stdev(v) if len(v) >= 2 else math.nan
-                for k, v in self._timings.items()
-            }
         if name in self._timings:
             value = self._timings[name]
             return statistics.stdev(value) if len(value) >= 2 else math.nan
