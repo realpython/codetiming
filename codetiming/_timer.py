@@ -48,7 +48,13 @@ class Timer(ContextDecorator):
 
         # Report elapsed time
         if self.logger:
-            self.logger(self.text.format(self.last))
+            attributes = {
+                "name": self.name,
+                "milliseconds": self.last * 1000,
+                "seconds": self.last,
+                "minutes": self.last / 60,
+            }
+            self.logger(self.text.format(self.last, **attributes))
         if self.name:
             self.timers.add(self.name, self.last)
 

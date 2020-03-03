@@ -57,11 +57,37 @@ You can use `codetiming.Timer` in several different ways:
 
 You can turn off explicit reporting of the elapsed time by setting `logger=None`.
 
+In the template text, you can also use explicit attributes to refer to the `name` of the timer, or log the elapsed time in `milliseconds`, `seconds` (the default), or `minutes`. For example:
+
+```python
+t1 = Timer(name="NamedTimer", text="{name}: {minutes:.1f} minutes")
+t2 = Timer(text="Elapsed time: {milliseconds:.0f} ms")
+```
+
+Note that the strings used by `text` are **not** f-strings. Instead they are used as templates that will be populated using `.format()` behind the scenes. If you want to combine the `text` template with an f-string, you need to use double braces for the template values:
+
+```python
+t = Timer(text=f"{__file__}: {{:.4f}}")
+```
+
+
+## Capturing the Elapsed Time
+
 When using `Timer` as a class, you can capture the elapsed time when calling `.stop()`:
 
 ```python
 elapsed_time = t.stop()
 ```
+
+You can also find the last measured elapsed time in the `.last` attribute. The following code will have the same effect as the previous example:
+
+```python
+t.stop()
+elapsed_time = t.last
+```
+
+
+## Named Timers
 
 Named timers are made available in the class dictionary `Timer.timers`. The elapsed time will accumulate if the same name or same timer is used several times. Consider the following example:
 
@@ -86,6 +112,21 @@ WARNING:root:Time spent: 1.73
 ```
 
 The example shows how you can redirect the timer output to the logging module. Note that the elapsed time spent in the two different uses of `t` has been accumulated in `Timer.timers`.
+
+You can also get simple statistics about your named timers. Continuing from the example above:
+
+```python
+>>> Timer.timers.max("example")
+3.5836678670002584
+
+>>> Timer.timers.mean("example")
+2.6563487200000964
+
+>>> Timer.timers.stdev("example")
+1.311427314335879
+```
+
+`timers` support `.count()`, `.total()`, `.min()`, `.max()`, `.mean()`, `.median()`, and `.stdev()`.
 
 
 ## Acknowledgements
