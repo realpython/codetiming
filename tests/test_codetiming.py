@@ -186,6 +186,45 @@ def test_timer_sets_last():
     assert t.last >= 0.02
 
 
+def test_using_name_in_text_without_explicit_timer(capsys):
+    """Test that the name of the timer can be referenced in the text"""
+    name = "NamedTimer"
+    with Timer(name=name, text="{name}: {:.2f}"):
+        waste_time()
+
+    stdout, stderr = capsys.readouterr()
+    assert re.match(f"{name}: " + r"0\.\d{2}", stdout)
+
+
+def test_using_name_in_text_with_explicit_timer(capsys):
+    """Test that the name of the timer and the seconds attribute can be referenced in the text"""
+    name = "NamedTimer"
+    with Timer(name=name, text="{name}: {seconds:.2f}"):
+        waste_time()
+
+    stdout, stderr = capsys.readouterr()
+    assert re.match(f"{name}: " + r"0\.\d{2}", stdout.strip())
+
+
+def test_using_minutes_attribute_in_text(capsys):
+    """Test that timer can report its duration in minutes"""
+    with Timer(text="{minutes:.1f} minutes"):
+        waste_time()
+
+    stdout, stderr = capsys.readouterr()
+    assert stdout.strip() == "0.0 minutes"
+
+
+def test_using_milliseconds_attribute_in_text(capsys):
+    """Test that timer can report its duration in milliseconds"""
+    with Timer(text="{milliseconds:.0f} {seconds:.3f}"):
+        waste_time()
+
+    stdout, stderr = capsys.readouterr()
+    milliseconds, _, seconds = stdout.partition(" ")
+    assert int(milliseconds) == round(float(seconds) * 1000)
+
+
 def test_timers_cleared():
     """Test that timers can be cleared"""
     with Timer(name="timer_to_be_cleared"):
