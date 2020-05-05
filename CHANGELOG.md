@@ -7,6 +7,11 @@ The format is based on [Keep a Changelog](https://keepachangelog1.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+
+- Testing with [Interrogate](https://interrogate.readthedocs.io/) to enforce docstrings ([#27]).
+
+
 ## [1.2.0] - 2020-03-03
 
 ### Added
@@ -44,3 +49,4 @@ Initial version of `codetiming`. Version 1.0.0 corresponds to the code in the tu
 [#23]: https://github.com/realpython/codetiming/pull/23
 [#24]: https://github.com/realpython/codetiming/issues/24
 [#25]: https://github.com/realpython/codetiming/pull/25
+[#27]: https://github.com/realpython/codetiming/pull/27
