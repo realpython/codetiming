@@ -1,46 +1,50 @@
 [build-system]
-requires = ["flit_core >=2,<3"]
+requires = ["flit_core >=2,<4"]
 build-backend = "flit_core.buildapi"
 
-[tool.flit.metadata]
-module = "codetiming"
-author = "Real Python"
-author-email = "info@realpython.com"
-home-page = "https://realpython.com/python-timer"
-description-file = "README.md"
-classifiers = [
-    "Development Status :: 5 - Production/Stable",
-    "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
-    "Natural Language :: English",
-    "Operating System :: MacOS",
-    "Operating System :: Microsoft",
-    "Operating System :: POSIX :: Linux",
-    "Programming Language :: Python :: 3.6",
-    "Programming Language :: Python :: 3.7",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Topic :: Education",
-    "Topic :: Software Development :: Libraries :: Python Modules",
-    "Topic :: System :: Monitoring",
-    "Typing :: Typed",
-]
-keywords = "timer class contextmanager decorator"
 
-# Requirements
-requires-python    = ">=3.6"
-requires           = [
-    "dataclasses; python_version < '3.7'",
-]
+[tool.flit]
+
+    [tool.flit.metadata]
+    module = "codetiming"
+    author = "Real Python"
+    author-email = "info@realpython.com"
+    home-page = "https://realpython.com/python-timer"
+    description-file = "README.md"
+    classifiers = [
+        "Development Status :: 5 - Production/Stable",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Natural Language :: English",
+        "Operating System :: MacOS",
+        "Operating System :: Microsoft",
+        "Operating System :: POSIX :: Linux",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Topic :: Education",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+        "Topic :: System :: Monitoring",
+        "Typing :: Typed",
+    ]
+    keywords = "timer class contextmanager decorator"
+
+    # Requirements
+    requires-python    = ">=3.6"
+    requires           = [
+        "dataclasses; python_version < '3.7'",
+    ]
 
 
-[tool.flit.metadata.urls]
-"Source Code" = "https://github.com/realpython/codetiming"
-"Tutorial" = "https://realpython.com/python-timer"
+    [tool.flit.metadata.urls]
+    "Source Code" = "https://github.com/realpython/codetiming"
+    "Tutorial" = "https://realpython.com/python-timer"
 
-[tool.flit.metadata.requires-extra]
-dev                = ["black", "bump2version", "flake8", "flit", "isort", "mypy"]
-test               = ["pytest", "pytest-cov", "tox"]
+    [tool.flit.metadata.requires-extra]
+    dev                = ["black", "bump2version", "flake8", "flit", "interrogate", "isort", "mypy"]
+    test               = ["black", "interrogate", "pytest", "pytest-cov", "tox"]
+
 
 [tool.isort]
 multi_line_output             = 3
