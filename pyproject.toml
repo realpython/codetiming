@@ -46,6 +46,17 @@ build-backend = "flit_core.buildapi"
     test               = ["black", "interrogate", "pytest", "pytest-cov", "tox"]
 
 
+[tool.interrogate]
+ignore-init-method = false
+ignore-init-module = false
+ignore-magic = false
+ignore-semiprivate = false
+ignore-private = false
+ignore-module = false
+fail-under = 100
+verbose = 0
+
+
 [tool.isort]
 multi_line_output             = 3
 include_trailing_comma        = true
