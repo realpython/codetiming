@@ -65,4 +65,10 @@ Run tests using [`tox`](https://tox.readthedocs.io/). `tox` helps to enforce the
     $ pytest --cov=codetiming --cov-report=term-missing
     ```
 
+- All modules, functions, classes, and methods must have docstrings. This is enforced by [Interrogation](https://interrogate.readthedocs.io/). You can test compliance as follows:
+
+    ```
+    $ interrogate -c pyproject.toml -vv
+    ```
+
 Feel free to ask for help in your PR if you are having challenges with any of these tests.
