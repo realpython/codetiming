@@ -42,9 +42,11 @@ class CustomLogger:
     """Simple class used to test custom logging capabilities in Timer"""
 
     def __init__(self):
+        """Store log messages in the .messages attribute"""
         self.messages = ""
 
     def __call__(self, message):
+        """Add a log message to the .messages attribute"""
         self.messages += message
 
 

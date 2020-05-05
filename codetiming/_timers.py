@@ -14,6 +14,8 @@ else:
 
 
 class Timers(UserDict):
+    """Custom dictionary that stores information about timers"""
+
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         """Add a private dictionary keeping track of all timings"""
         super().__init__(*args, **kwargs)
