@@ -30,8 +30,10 @@ jobs:
     docker:
       - image: circleci/python:3.8
 
-  "test-py39":
+  "test-py39-no-mypy":
     <<: *shared
+    environment:
+      TOX_SKIP_ENV: mypy
     docker:
       - image: circleci/python:3.9-rc
 
@@ -43,4 +45,4 @@ workflows:
       - "test-py36"
       - "test-py37"
       - "test-py38"
-      - "test-py39"
+      - "test-py39-no-mypy"
