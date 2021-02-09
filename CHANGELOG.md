@@ -7,6 +7,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+
+## [1.3.0] - 2021-02-09
+
 ### Added
 
 - `text` can be a callable returning a formatted string, suggested by [@dchess](https://github.com/dchess) in [#29] ([#30]).
@@ -39,7 +42,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 Initial version of `codetiming`. Version 1.0.0 corresponds to the code in the tutorial [Python Timer Functions: Three Ways to Monitor Your Code](https://realpython.com/python-timer/).
 
 
-[Unreleased]: https://github.com/realpython/codetiming/compare/v1.2.0...HEAD
+[Unreleased]: https://github.com/realpython/codetiming/compare/v1.3.0...HEAD
+[1.3.0]: https://github.com/realpython/codetiming/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/realpython/codetiming/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/realpython/codetiming/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/realpython/codetiming/releases/tag/v1.0.0
