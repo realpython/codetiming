@@ -9,7 +9,7 @@ import math
 import time
 from contextlib import ContextDecorator
 from dataclasses import dataclass, field
-from typing import Any, Callable, ClassVar, Optional
+from typing import Any, Callable, ClassVar, Optional, Union
 
 # Codetiming imports
 from codetiming._timers import Timers
@@ -26,7 +26,7 @@ class Timer(ContextDecorator):
     timers: ClassVar[Timers] = Timers()
     _start_time: Optional[float] = field(default=None, init=False, repr=False)
     name: Optional[str] = None
-    text: str = "Elapsed time: {:0.4f} seconds"
+    text: Union[str, Callable[[float], str]] = "Elapsed time: {:0.4f} seconds"
     logger: Optional[Callable[[str], None]] = print
     last: float = field(default=math.nan, init=False, repr=False)
 
@@ -48,13 +48,17 @@ class Timer(ContextDecorator):
 
         # Report elapsed time
         if self.logger:
-            attributes = {
-                "name": self.name,
-                "milliseconds": self.last * 1000,
-                "seconds": self.last,
-                "minutes": self.last / 60,
-            }
-            self.logger(self.text.format(self.last, **attributes))
+            if callable(self.text):
+                text = self.text(self.last)
+            else:
+                attributes = {
+                    "name": self.name,
+                    "milliseconds": self.last * 1000,
+                    "seconds": self.last,
+                    "minutes": self.last / 60,
+                }
+                text = self.text.format(self.last, **attributes)
+            self.logger(text)
         if self.name:
             self.timers.add(self.name, self.last)
 
