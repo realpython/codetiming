@@ -227,6 +227,54 @@ def test_using_milliseconds_attribute_in_text(capsys):
     assert int(milliseconds) == round(float(seconds) * 1000)
 
 
+def test_text_formatting_function(capsys):
+    """Test that text can be formatted by a separate function"""
+
+    def format_text(seconds):
+        """Function that returns a formatted text"""
+        return f"Function: {seconds + 1:.0f}"
+
+    with Timer(text=format_text):
+        waste_time()
+
+    stdout, stderr = capsys.readouterr()
+    assert stdout.strip() == "Function: 1"
+    assert not stderr.strip()
+
+
+def test_text_formatting_class(capsys):
+    """Test that text can be formatted by a separate class"""
+
+    class TextFormatter:
+        """Class that behaves like a formatted text"""
+
+        def __init__(self, seconds):
+            """Initialize with number of seconds"""
+            self.seconds = seconds
+
+        def __str__(self):
+            """Represent the class as a formatted text"""
+            return f"Class: {self.seconds + 1:.0f}"
+
+    with Timer(text=TextFormatter):
+        waste_time()
+
+    stdout, stderr = capsys.readouterr()
+    assert stdout.strip() == "Class: 1"
+    assert not stderr.strip()
+
+    def format_text(seconds):
+        """Callable that returns a formatted text"""
+        return f"Callable: {seconds + 1:.0f}"
+
+    with Timer(text=format_text):
+        waste_time()
+
+    stdout, stderr = capsys.readouterr()
+    assert stdout.strip() == "Callable: 1"
+    assert not stderr.strip()
+
+
 def test_timers_cleared():
     """Test that timers can be cleared"""
     with Timer(name="timer_to_be_cleared"):

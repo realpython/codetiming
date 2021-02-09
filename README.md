@@ -71,6 +71,22 @@ Note that the strings used by `text` are **not** f-strings. Instead they are use
 t = Timer(text=f"{__file__}: {{:.4f}}")
 ```
 
+`text` is also allowed to be a callable like a function or a class. If `text` is a callable, it is expected to require one argument: the number of seconds elapsed. It should return a text string that will be logged using logger:
+
+```python
+t = Timer(text=lambda secs: f"{secs / 86400:.0f} days")
+```
+
+This allows you to use third-party libraries like [`humanfriendly`](https://pypi.org/project/humanfriendly/) to do the text formatting:
+
+```
+from humanfriendly import format_timespan
+
+t1 = Timer(text=format_timespan)
+t2 = Timer(text=lambda secs: f"Elapsed time: {format_timespan(secs)}")
+```
+
+
 
 ## Capturing the Elapsed Time
 

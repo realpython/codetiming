@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Added
 
+- `text` can be a callable returning a formatted string, suggested by [@dchess](https://github.com/dchess) in [#29] ([#30]).
 - Testing with [Interrogate](https://interrogate.readthedocs.io/) to enforce docstrings ([#27]).
 
 
@@ -50,3 +51,5 @@ Initial version of `codetiming`. Version 1.0.0 corresponds to the code in the tu
 [#24]: https://github.com/realpython/codetiming/issues/24
 [#25]: https://github.com/realpython/codetiming/pull/25
 [#27]: https://github.com/realpython/codetiming/pull/27
+[#29]: https://github.com/realpython/codetiming/issues/29
+[#30]: https://github.com/realpython/codetiming/pull/30
