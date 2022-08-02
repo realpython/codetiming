@@ -39,9 +39,12 @@ Homepage      = "https://realpython.com/python-timer"
 Tutorial      = "https://realpython.com/python-timer"
 
 [project.optional-dependencies]
+cli  = ["platformdirs", "plotille", "rich"]
 dev  = ["black", "bump2version", "flake8", "flit", "interrogate", "isort", "mypy"]
 test = ["black", "interrogate", "pytest", "pytest-cov", "tox"]
 
+[project.scripts]
+codetiming = "codetiming.__main__:main"
 
 [tool.interrogate]
 ignore-init-method = false
