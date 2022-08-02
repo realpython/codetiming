@@ -1,0 +1,27 @@
+name: unit_tests
+on: [push, pull_request]
+
+jobs:
+  tests:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {name: Linux36, python: '3.6', os: ubuntu-latest, tox: py36}
+          - {name: Linux37, python: '3.7', os: ubuntu-latest, tox: py37}
+          - {name: Linux38, python: '3.8', os: ubuntu-latest, tox: py38}
+          - {name: Linux39, python: '3.9', os: ubuntu-latest, tox: py39}
+          - {name: Linux310, python: '3.10', os: ubuntu-latest, tox: py310}
+          - {name: Linux311, python: '3.11', os: ubuntu-latest, tox: py311}
+          - {name: Style, python: '3.10', os: ubuntu-latest, tox: style}
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python }}
+    - run: pip install tox
+    - name: Run app tox tests
+      run: |
+        tox -e ${{ matrix.tox }}
