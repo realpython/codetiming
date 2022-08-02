@@ -1,68 +1,61 @@
 [build-system]
-requires = ["flit_core >=2,<4"]
+requires      = ["flit_core >=3.2,<4"]
 build-backend = "flit_core.buildapi"
 
+[project]
+name = "codetiming"
+authors = [
+    { name = "Geir Arne Hjelle", email = "geirarne@gmail.com" },
+    { name = "Real Python", email = "info@realpython.com" },
+]
+readme = "README.md"
+dynamic = ["version", "description"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Operating System :: MacOS",
+    "Operating System :: Microsoft",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Education",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: System :: Monitoring",
+    "Typing :: Typed",
+]
+keywords = ["timer", "class", "contextmanager", "decorator"]
+requires-python = ">=3.6"
+dependencies = ["dataclasses; python_version < '3.7'"]
 
-[tool.flit]
+[project.urls]
+Homepage      = "https://realpython.com/python-timer"
+"Source Code" = "https://github.com/realpython/codetiming"
+Tutorial      = "https://realpython.com/python-timer"
 
-    [tool.flit.metadata]
-    module = "codetiming"
-    author = "Real Python"
-    author-email = "info@realpython.com"
-    home-page = "https://realpython.com/python-timer"
-    description-file = "README.md"
-    classifiers = [
-        "Development Status :: 5 - Production/Stable",
-        "Intended Audience :: Developers",
-        "License :: OSI Approved :: MIT License",
-        "Natural Language :: English",
-        "Operating System :: MacOS",
-        "Operating System :: Microsoft",
-        "Operating System :: POSIX :: Linux",
-        "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.7",
-        "Programming Language :: Python :: 3.8",
-        "Programming Language :: Python :: 3.9",
-        "Topic :: Education",
-        "Topic :: Software Development :: Libraries :: Python Modules",
-        "Topic :: System :: Monitoring",
-        "Typing :: Typed",
-    ]
-    keywords = "timer class contextmanager decorator"
-
-    # Requirements
-    requires-python    = ">=3.6"
-    requires           = [
-        "dataclasses; python_version < '3.7'",
-    ]
-
-
-    [tool.flit.metadata.urls]
-    "Source Code" = "https://github.com/realpython/codetiming"
-    "Tutorial" = "https://realpython.com/python-timer"
-
-    [tool.flit.metadata.requires-extra]
-    dev                = ["black", "bump2version", "flake8", "flit", "interrogate", "isort", "mypy"]
-    test               = ["black", "interrogate", "pytest", "pytest-cov", "tox"]
+[project.optional-dependencies]
+dev  = ["black", "bump2version", "flake8", "flit", "interrogate", "isort", "mypy"]
+test = ["black", "interrogate", "pytest", "pytest-cov", "tox"]
 
 
 [tool.interrogate]
 ignore-init-method = false
 ignore-init-module = false
-ignore-magic = false
+ignore-magic       = false
 ignore-semiprivate = false
-ignore-private = false
-ignore-module = false
-fail-under = 100
-verbose = 0
+ignore-private     = false
+ignore-module      = false
+fail-under         = 100
+verbose            = 0
 
 
 [tool.isort]
-multi_line_output             = 3
-include_trailing_comma        = true
-force_grid_wrap               = 0
-use_parentheses               = true
-line_length                   = 88
-import_heading_stdlib         = "Standard library imports"
-import_heading_thirdparty     = "Third party imports"
-import_heading_firstparty     = "Codetiming imports"
+profile                   = "black"
+import_heading_stdlib     = "Standard library imports"
+import_heading_thirdparty = "Third party imports"
+import_heading_firstparty = "Codetiming imports"
