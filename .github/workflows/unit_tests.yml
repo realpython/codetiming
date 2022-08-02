@@ -14,7 +14,7 @@ jobs:
           - {name: Linux38, python: '3.8', os: ubuntu-latest, tox: py38}
           - {name: Linux39, python: '3.9', os: ubuntu-latest, tox: py39}
           - {name: Linux310, python: '3.10', os: ubuntu-latest, tox: py310}
-          - {name: Linux311, python: '3.11', os: ubuntu-latest, tox: py311}
+          - {name: Linux311, python: '3.11.0-beta.5', os: ubuntu-latest, tox: py311}
           - {name: Style, python: '3.10', os: ubuntu-latest, tox: style}
     steps:
     - uses: actions/checkout@v2
