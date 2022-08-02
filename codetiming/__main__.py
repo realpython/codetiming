@@ -29,35 +29,44 @@ PREC = 4
 def main():
     """Wrap a Python script inside codetiming"""
     args = parse_args(sys.argv)
+    script = sys.argv[args["arg_start_idx"] :]
+    name = normalize_name(args["tag"], *script)
 
-    # Run process
-    cmd = [sys.executable, *sys.argv[args["arg_start_idx"] :]]
+    # Run script
+    timestamp = datetime.now()
+    runtime = run_script(script=script, tag=args["tag"])
+    store_run(name=name, timestamp=timestamp, runtime=runtime)
+
+    # Report
+    tag, _, script_str = name.partition("_")
+    stats = get_stats(script=script_str)
+    console.print(show_table(stats=stats, script=script_str, current_tag=tag))
+    console.print(show_plot(stats=stats, script=script_str, current_tag=tag))
+
+
+def run_script(script, tag):
+    """Run the script and return the running time"""
+    cmd = [sys.executable, *script]
     console.print(
-        f"Running [cyan]{pathlib.Path(cmd[0]).name} {' '.join(cmd[1:])}[/] "
-        f"with tag [cyan]{args['tag']}[/]"
+        f"Running [cyan]{pathlib.Path(cmd[0]).name} {' '.join(script)}[/] "
+        f"with tag [cyan]{tag}[/]"
     )
-    with (timer := Timer(logger=None)):
+    with (timer := Timer(logger=console.print)):
         subprocess.run(cmd)
 
-    # Clean-up
-    name = normalize_name(args["tag"], *cmd[1:])
-    store_run(name=name, runtime=timer.last)
-    show_stats(name=name, process=" ".join(cmd[1:]))
+    return timer.last
 
 
-def store_run(name, runtime):
-    """Save information about run to file"""
+def store_run(name, timestamp, runtime):
+    """Save information about the run to file"""
     path = STATS_PATH / f"{name}.txt"
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open(mode="at", encoding="utf-8") as fid:
-        fid.write(f"{datetime.now().isoformat()},{runtime}\n")
+        fid.write(f"{timestamp.isoformat()},{runtime}\n")
 
 
-def show_stats(name, process):
-    """Show statistics for all runs"""
-    current_tag, _, script = name.partition("_")
-
-    # Read statistics from files
+def get_stats(script):
+    """Get statistics for all runs of this script"""
     stat_paths = STATS_PATH.glob(f"*{script}.txt")
     stats = {}
     for path in stat_paths:
@@ -70,10 +79,16 @@ def show_stats(name, process):
             ]
         ]
         stats[tag] = dict(zip(["timestamps", "times"], zip(*timers)))
+
+    return stats
+
+
+def show_table(stats, script, current_tag):
+    """Show statistics in a table"""
     tags = sorted(stats.keys(), key=lambda tag: mean(stats[tag]["times"]))
 
-    # Show statistics in a table
-    table = Table(title=f"Codetiming: {process}")
+    # Set up a Rich table
+    table = Table(title=f"Codetiming: {script}")
     table.add_column("Tag", justify="right", width=30, style="green", no_wrap=True)
     table.add_column("Last", justify="right", width=8)
     table.add_column("#", justify="right", width=4)
@@ -83,6 +98,7 @@ def show_stats(name, process):
     table.add_column(f"vs {current_tag}", justify="right", width=12)
     ref_mean = mean(stats[current_tag]["times"])
 
+    # Fill in data
     for tag in tags:
         times = stats[tag]["times"]
         table.add_row(
@@ -95,16 +111,19 @@ def show_stats(name, process):
             f"{mean(times) / ref_mean:.2f}x",
             style="cyan bold" if tag == current_tag else None,
         )
-    console.print(table)
+    return table
 
-    # Show statistics over time in a plot
+
+def show_plot(stats, script, current_tag):
+    """Show statistics over time in a plot"""
     data = stats[current_tag]
-    if len(data["times"]) >= 2:
-        plot = plotille.plot(data["timestamps"], data["times"], height=20, width=80)
-        console.print(
-            f"\nCodetimings of [bold cyan]{process} ({current_tag})[/] over time"
-        )
-        console.print(plot)
+    if len(data["times"]) < 2:
+        return
+
+    return (
+        f"\nCodetimings of [bold cyan]{script} ({current_tag})[/] over time\n"
+        + plotille.plot(data["timestamps"], data["times"], height=20, width=80)
+    )
 
 
 def parse_args(args):
@@ -113,18 +132,21 @@ def parse_args(args):
     We can't use argparse or similar tools because they will raise issues with
     the script arguments.
     """
-    parsed = {"tag": "default", "arg_start_idx": 1}
+    options = {"-t": ("tag", str), "--tag": ("tag", str)}
+    option_values = {"tag": "default"}
+    arg_start_idx = 1
 
-    if len(args) < 2:
+    if len(args) <= arg_start_idx:
         show_help()
 
-    if args[1] in ("-t", "--tag"):
-        if len(args) < 4:
+    while args[arg_start_idx] in options:
+        option, parser = options[args[arg_start_idx]]
+        if len(args) <= arg_start_idx + 2:
             show_help()
-        parsed["tag"] = args[2]
-        parsed["arg_start_idx"] += 2
+        option_values[option] = parser(args[arg_start_idx + 1])
+        arg_start_idx += 2
 
-    return parsed
+    return dict(option_values, arg_start_idx=arg_start_idx)
 
 
 def show_help():
