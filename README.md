@@ -2,12 +2,14 @@
 
 # `codetiming` - A flexible, customizable timer for your Python code
 
-[![Latest version](https://img.shields.io/pypi/v/codetiming.svg)](https://pypi.org/project/codetiming/)
-[![Python versions](https://img.shields.io/pypi/pyversions/codetiming.svg)](https://pypi.org/project/codetiming/)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Latest version](https://img.shields.io/pypi/v/codetiming)](https://pypi.org/project/codetiming/)
+[![Python versions](https://img.shields.io/pypi/pyversions/codetiming)](https://pypi.org/project/codetiming/)
+[![Downloads](https://img.shields.io/pypi/dd/codetiming)](https://pypi.org/project/codetiming/)
+[![Tests](https://img.shields.io/github/workflow/status/realpython/codetiming/unit_tests?label=tests)](https://github.com/realpython/codetiming/actions)
 [![Checked with mypy](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/)
 [![Interrogate DocStrings](https://github.com/realpython/codetiming/blob/master/interrogate_badge.svg)](https://interrogate.readthedocs.io/)
-[![CircleCI](https://circleci.com/gh/realpython/codetiming.svg?style=shield)](https://circleci.com/gh/realpython/codetiming)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![MIT license](https://img.shields.io/pypi/l/codetiming)](https://mit-license.org/)
 
 Install `codetiming` from PyPI:
 
@@ -15,9 +17,9 @@ Install `codetiming` from PyPI:
 $ python -m pip install codetiming
 ```
 
-The source code is [available at GitHub](https://github.com/realpython/codetiming).
+The source code is [available on GitHub](https://github.com/realpython/codetiming).
 
-For a complete tutorial on how `codetiming` works, see [Python Timer Functions: Three Ways to Monitor Your Code](https://realpython.com/python-timer) on [Real Python](https://realpython.com/).
+For a complete tutorial on `codetiming`, see [Python Timer Functions: Three Ways to Monitor Your Code](https://realpython.com/python-timer) on [Real Python](https://realpython.com/).
 
 ## Basic Usage
 
@@ -50,22 +52,22 @@ You can use `codetiming.Timer` in several different ways:
 
 ## Arguments
 
-`Timer` accepts the following arguments when it's created, all are optional:
+`Timer` accepts the following arguments when it's created. All arguments are optional:
 
 - **`name`:** An optional name for your timer
 - **`text`:** The text shown when your timer ends. It should contain a `{}` placeholder that will be filled by the elapsed time in seconds (default: `"Elapsed time: {:.4f} seconds"`)
-- **`logger`:** A function/callable that takes a string argument, and will report the elapsed time when the logger is stopped (default: `print()`)
+- **`logger`:** A function/callable that takes a string argument and will report the elapsed time when the logger is stopped (default: `print()`)
 
 You can turn off explicit reporting of the elapsed time by setting `logger=None`.
 
-In the template text, you can also use explicit attributes to refer to the `name` of the timer, or log the elapsed time in `milliseconds`, `seconds` (the default), or `minutes`. For example:
+In the template text, you can also use explicit attributes to refer to the `name` of the timer or log the elapsed time in `milliseconds`, `seconds` (the default), or `minutes`. For example:
 
 ```python
 t1 = Timer(name="NamedTimer", text="{name}: {minutes:.1f} minutes")
 t2 = Timer(text="Elapsed time: {milliseconds:.0f} ms")
 ```
 
-Note that the strings used by `text` are **not** f-strings. Instead they are used as templates that will be populated using `.format()` behind the scenes. If you want to combine the `text` template with an f-string, you need to use double braces for the template values:
+Note that the strings used by `text` are **not** f-strings. Instead, they are used as templates that will be populated using `.format()` behind the scenes. If you want to combine the `text` template with an f-string, you need to use double braces for the template values:
 
 ```python
 t = Timer(text=f"{__file__}: {{:.4f}}")
@@ -146,6 +148,6 @@ You can also get simple statistics about your named timers. Continuing from the 
 `timers` support `.count()`, `.total()`, `.min()`, `.max()`, `.mean()`, `.median()`, and `.stdev()`.
 
 
-## Acknowledgements
+## Acknowledgments
 
-`codetiming` is based on a similar module originally developed for the [Midgard Geodesy library](https://kartverket.github.io/midgard/) at the [Norwegian Mapping Authority](https://www.kartverket.no/en/).
+`codetiming` is based on a similar module initially developed for the [Midgard Geodesy library](https://kartverket.github.io/midgard/) at the [Norwegian Mapping Authority](https://www.kartverket.no/en/).
