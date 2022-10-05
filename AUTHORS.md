@@ -11,6 +11,7 @@
 ## Contributors
 
 - [Jan Freyberg](https://github.com/janfreyberg)
+- [Alkatar21](https://github.com/alkatar21)
 
 
 See the [changelog](https://github.com/realpython/codetiming/blob/master/CHANGELOG.md) for more details.

@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 
 ## [Unreleased]
+- Add `py.typed` to mark the package as typed as specified in [PEP 561](https://peps.python.org/pep-0561/#packaging-type-information) (by @alkatar21 in #38)
 
 
 ## [1.3.0] - 2021-02-09
