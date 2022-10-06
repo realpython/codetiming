@@ -1,6 +1,6 @@
 # Authors and Contributors
 
-`codetiming` is written and maintained by the [_Real Python_ team](https://realpython.com/team/).
+`codetiming` is written and maintained by the [Real Python team](https://realpython.com/team/).
 
 
 ## Author and Maintainer

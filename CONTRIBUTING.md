@@ -47,13 +47,13 @@ Run tests using [`tox`](https://tox.readthedocs.io/). `tox` helps to enforce the
 
 - Consistent code style using [`black`](https://black.readthedocs.io). You can automatically format your code as follows:
 
-    ```
-    $ black codetiming/
+    ```console
+    $ python -m black codetiming/ tests/
     ```
 
 - Static type hinting using [`mypy`](http://mypy-lang.org/). Test your type hints as follows:
 
-    ```
+    ```console
     $ mypy --strict codetiming/
     ```
 
@@ -61,13 +61,25 @@ Run tests using [`tox`](https://tox.readthedocs.io/). `tox` helps to enforce the
 
 - Unit testing using [`pytest`](https://docs.pytest.org/). You can run your tests and see a coverage report as follows:
 
-    ```
+    ```console
     $ pytest --cov=codetiming --cov-report=term-missing
+    ```
+
+- Code issues are checked with the [flake8]() linter. You can run flake8 manually as follows:
+
+    ```console
+    $ python -m flake8 codetiming/ tests/
+    ```
+
+- Imports are sorted consistently using [isort](https://pycqa.github.io/isort/). You can automatically sort your imports as follows:
+
+    ```console
+    $ python -m isort codetiming/ tests/
     ```
 
 - All modules, functions, classes, and methods must have docstrings. This is enforced by [Interrogation](https://interrogate.readthedocs.io/). You can test compliance as follows:
 
-    ```
+    ```console
     $ interrogate -c pyproject.toml -vv
     ```
 

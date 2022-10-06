@@ -23,19 +23,19 @@ RE_TIME_MESSAGE = re.compile(TIME_PREFIX + r" 0\.\d{4} seconds")
 
 def waste_time(num=1000):
     """Just waste a little bit of time"""
-    sum(n ** 2 for n in range(num))
+    sum(n**2 for n in range(num))
 
 
 @Timer(text=TIME_MESSAGE)
 def decorated_timewaste(num=1000):
     """Just waste a little bit of time"""
-    sum(n ** 2 for n in range(num))
+    sum(n**2 for n in range(num))
 
 
 @Timer(name="accumulator", text=TIME_MESSAGE)
 def accumulated_timewaste(num=1000):
     """Just waste a little bit of time"""
-    sum(n ** 2 for n in range(num))
+    sum(n**2 for n in range(num))
 
 
 class CustomLogger:
