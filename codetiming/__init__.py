@@ -1,4 +1,4 @@
-"""A flexible, customizable timer for your Python code
+"""A flexible, customizable timer for your Python code.
 
 You can use `codetiming.Timer` in several different ways:
 
