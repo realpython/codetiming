@@ -25,4 +25,4 @@ You can use `codetiming.Timer` in several different ways:
 from codetiming._timer import Timer, TimerError  # noqa
 
 # Versioning is handled by bump2version
-__version__ = "1.3.0"
+__version__ = "1.3.1"
