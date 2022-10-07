@@ -7,7 +7,7 @@
 [![Downloads](https://img.shields.io/pypi/dd/codetiming)](https://pypi.org/project/codetiming/)
 [![Tests](https://img.shields.io/github/workflow/status/realpython/codetiming/unit_tests?label=tests)](https://github.com/realpython/codetiming/actions)
 [![Checked with mypy](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/)
-[![Interrogate DocStrings](https://github.com/realpython/codetiming/blob/master/interrogate_badge.svg)](https://interrogate.readthedocs.io/)
+[![Interrogate DocStrings](https://raw.githubusercontent.com/realpython/codetiming/main/interrogate_badge.svg)](https://interrogate.readthedocs.io/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![MIT license](https://img.shields.io/pypi/l/codetiming)](https://mit-license.org/)
 
@@ -89,7 +89,6 @@ t2 = Timer(text=lambda secs: f"Elapsed time: {format_timespan(secs)}")
 ```
 
 
-
 ## Capturing the Elapsed Time
 
 When using `Timer` as a class, you can capture the elapsed time when calling `.stop()`:
@@ -122,7 +121,7 @@ WARNING:root:Time spent: 3.58
 3.5836678670002584
 
 >>> with t:
-...     _ = list(range(100000000))
+...     _ = list(range(100_000_000))
 ... 
 WARNING:root:Time spent: 1.73
 
