@@ -7,9 +7,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [1.3.2] - 2022-10-07
+
 ### Added
 
-- `__all__` to let type checkers know what is part of the public API. (by [@alkatar21](https://github.com/alkatar21) in [#46])
+- `__all__` to specify the public API (by [@alkatar21](https://github.com/alkatar21) in [#46])
 
 ## [1.3.1] - 2022-10-06
 
@@ -56,8 +58,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 Initial version of `codetiming`. Version 1.0.0 corresponds to the code in the tutorial [Python Timer Functions: Three Ways to Monitor Your Code](https://realpython.com/python-timer/).
 
 
-[Unreleased]: https://github.com/realpython/codetiming/compare/v1.3.1...HEAD
-[1.3.0]: https://github.com/realpython/codetiming/compare/v1.3.0...v1.3.1
+[Unreleased]: https://github.com/realpython/codetiming/compare/v1.3.2...HEAD
+[1.3.2]: https://github.com/realpython/codetiming/compare/v1.3.1...v1.3.2
+[1.3.1]: https://github.com/realpython/codetiming/compare/v1.3.0...v1.3.1
 [1.3.0]: https://github.com/realpython/codetiming/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/realpython/codetiming/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/realpython/codetiming/compare/v1.0.0...v1.1.0
