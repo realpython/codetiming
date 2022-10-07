@@ -7,6 +7,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Added
+
+- `__all__` to let type checkers know what is part of the public API. (by [@alkatar21](https://github.com/alkatar21) in [#46])
+
 ## [1.3.1] - 2022-10-06
 
 ### Added
@@ -73,3 +77,4 @@ Initial version of `codetiming`. Version 1.0.0 corresponds to the code in the tu
 [#34]: https://github.com/realpython/codetiming/pull/34
 [#35]: https://github.com/realpython/codetiming/pull/35
 [#38]: https://github.com/realpython/codetiming/pull/38
+[#46]: https://github.com/realpython/codetiming/pull/46
