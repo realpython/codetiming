@@ -32,6 +32,14 @@ class Timer(ContextDecorator):
 
     def start(self) -> None:
         """Start a new timer."""
+        # Generate timer init statement for logger.
+        if self.logger:
+            if self.name:
+                text = f"Timer {self.name} started..."
+            else:
+                text = "Timer started..."
+            self.logger(text)
+
         if self._start_time is not None:
             raise TimerError("Timer is running. Use .stop() to stop it")
 
