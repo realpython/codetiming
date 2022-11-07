@@ -38,8 +38,11 @@ class Timer(ContextDecorator):
             if isinstance(self.initial_text, str):
                 # To include timer name in text, include {name} within string (not as f-string!).
                 initial_text = self.initial_text.format(name=self.name)
+            elif self.name:
+                # If no custom string specified print a default statement using timer name.
+                initial_text = "Timer {name} started".format(name=self.name)
             else:
-                # If no custom strin is specified print a default statement.
+                # If no custom string or timer name is specified print a default statement.
                 initial_text = "Timer started"
             self.logger(initial_text)
 

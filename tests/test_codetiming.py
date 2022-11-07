@@ -405,6 +405,19 @@ def test_explicit_timer_with_initial_text_custom(capsys):
     assert stderr == ""
 
 
+def test_explicit_timer_with_initial_text_true_with_name(capsys):
+    """Test with default initial text referencing timer name."""
+    t = Timer(name='named', text=TIME_MESSAGE, initial_text=True)
+    t.start()
+    waste_time()
+    t.stop()
+    stdout, stderr = capsys.readouterr()
+    assert re.compile("Timer named started\n" + TIME_PREFIX + r" 0\.\d{4} seconds").match(stdout)
+    assert stdout.count("\n") == 2
+    assert stderr == ""
+
+
+
 def test_explicit_timer_with_initial_text_with_name(capsys):
     """Test with custom initial text referencing timer name."""
     t = Timer(name='the party', text=TIME_MESSAGE, initial_text='Starting {name}')
