@@ -7,6 +7,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Added
+
+- `inital_text` attribute to `Timer` class, which when present will use logger
+  to log that timer has been started (by [Matthew Price](https://github.com/pricemg) in [#47])
+
 ## [1.3.2] - 2022-10-07
 
 ### Added
