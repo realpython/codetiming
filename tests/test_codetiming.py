@@ -18,10 +18,7 @@ from codetiming import Timer, TimerError
 #
 TIME_PREFIX = "Wasted time:"
 TIME_MESSAGE = f"{TIME_PREFIX} {{:.4f}} seconds"
-RE_TIME_MESSAGE = re.compile("Timer started...\n" + TIME_PREFIX + r" 0\.\d{4} seconds")
-RE_TIME_MESSAGE_ACC = re.compile(
-    "Timer accumulator started...\n" + TIME_PREFIX + r" 0\.\d{4} seconds"
-)
+RE_TIME_MESSAGE = re.compile(TIME_PREFIX + r" 0\.\d{4} seconds")
 
 
 def waste_time(num=1000):
@@ -46,11 +43,11 @@ class CustomLogger:
 
     def __init__(self):
         """Store log messages in the .messages attribute"""
-        self.messages = []
+        self.messages = ""
 
     def __call__(self, message):
         """Add a log message to the .messages attribute"""
-        self.messages.append(message)
+        self.messages += message
 
 
 #
@@ -61,7 +58,7 @@ def test_timer_as_decorator(capsys):
     decorated_timewaste()
     stdout, stderr = capsys.readouterr()
     assert RE_TIME_MESSAGE.match(stdout)
-    assert stdout.count("\n") == 2
+    assert stdout.count("\n") == 1
     assert stderr == ""
 
 
@@ -71,7 +68,7 @@ def test_timer_as_context_manager(capsys):
         waste_time()
     stdout, stderr = capsys.readouterr()
     assert RE_TIME_MESSAGE.match(stdout)
-    assert stdout.count("\n") == 2
+    assert stdout.count("\n") == 1
     assert stderr == ""
 
 
@@ -83,7 +80,7 @@ def test_explicit_timer(capsys):
     t.stop()
     stdout, stderr = capsys.readouterr()
     assert RE_TIME_MESSAGE.match(stdout)
-    assert stdout.count("\n") == 2
+    assert stdout.count("\n") == 1
     assert stderr == ""
 
 
@@ -107,7 +104,7 @@ def test_custom_logger():
     logger = CustomLogger()
     with Timer(text=TIME_MESSAGE, logger=logger):
         waste_time()
-    assert RE_TIME_MESSAGE.match("\n".join(logger.messages))
+    assert RE_TIME_MESSAGE.match(logger.messages)
 
 
 def test_timer_without_text(capsys):
@@ -127,9 +124,9 @@ def test_accumulated_decorator(capsys):
 
     stdout, stderr = capsys.readouterr()
     lines = stdout.strip().split("\n")
-    assert len(lines) == 4
-    assert RE_TIME_MESSAGE_ACC.match(f"{lines[0]}\n{lines[1]}")
-    assert RE_TIME_MESSAGE_ACC.match(f"{lines[2]}\n{lines[3]}")
+    assert len(lines) == 2
+    assert RE_TIME_MESSAGE.match(lines[0])
+    assert RE_TIME_MESSAGE.match(lines[1])
     assert stderr == ""
 
 
@@ -143,15 +140,15 @@ def test_accumulated_context_manager(capsys):
 
     stdout, stderr = capsys.readouterr()
     lines = stdout.strip().split("\n")
-    assert len(lines) == 4
-    assert RE_TIME_MESSAGE_ACC.match(f"{lines[0]}\n{lines[1]}")
-    assert RE_TIME_MESSAGE_ACC.match(f"{lines[2]}\n{lines[3]}")
+    assert len(lines) == 2
+    assert RE_TIME_MESSAGE.match(lines[0])
+    assert RE_TIME_MESSAGE.match(lines[1])
     assert stderr == ""
 
 
 def test_accumulated_explicit_timer(capsys):
     """Test that explicit timer can accumulate"""
-    t = Timer(name="accumulator", text=TIME_MESSAGE)
+    t = Timer(name="accumulated_explicit_timer", text=TIME_MESSAGE)
     total = 0
     t.start()
     waste_time()
@@ -162,11 +159,11 @@ def test_accumulated_explicit_timer(capsys):
 
     stdout, stderr = capsys.readouterr()
     lines = stdout.strip().split("\n")
-    assert len(lines) == 4
-    assert RE_TIME_MESSAGE_ACC.match(f"{lines[0]}\n{lines[1]}")
-    assert RE_TIME_MESSAGE_ACC.match(f"{lines[2]}\n{lines[3]}")
+    assert len(lines) == 2
+    assert RE_TIME_MESSAGE.match(lines[0])
+    assert RE_TIME_MESSAGE.match(lines[1])
     assert stderr == ""
-    assert total == Timer.timers["accumulator"]
+    assert total == Timer.timers["accumulated_explicit_timer"]
 
 
 def test_error_if_restarting_running_timer():
@@ -198,7 +195,7 @@ def test_using_name_in_text_without_explicit_timer(capsys):
         waste_time()
 
     stdout, stderr = capsys.readouterr()
-    assert re.match(f"Timer {name} started...\n{name}: " + r"0\.\d{2}", stdout)
+    assert re.match(f"{name}: " + r"0\.\d{2}", stdout)
 
 
 def test_using_name_in_text_with_explicit_timer(capsys):
@@ -208,7 +205,7 @@ def test_using_name_in_text_with_explicit_timer(capsys):
         waste_time()
 
     stdout, stderr = capsys.readouterr()
-    assert re.match(f"Timer {name} started...\n{name}: " + r"0\.\d{2}", stdout.strip())
+    assert re.match(f"{name}: " + r"0\.\d{2}", stdout.strip())
 
 
 def test_using_minutes_attribute_in_text(capsys):
@@ -217,8 +214,7 @@ def test_using_minutes_attribute_in_text(capsys):
         waste_time()
 
     stdout, stderr = capsys.readouterr()
-    stdout_start, stdout_stop = stdout.strip().split("\n")
-    assert stdout_stop.strip() == "0.0 minutes"
+    assert stdout.strip() == "0.0 minutes"
 
 
 def test_using_milliseconds_attribute_in_text(capsys):
@@ -227,8 +223,7 @@ def test_using_milliseconds_attribute_in_text(capsys):
         waste_time()
 
     stdout, stderr = capsys.readouterr()
-    stdout_start, stdout_stop = stdout.strip().split("\n")
-    milliseconds, _, seconds = stdout_stop.partition(" ")
+    milliseconds, _, seconds = stdout.partition(" ")
     assert int(milliseconds) == round(float(seconds) * 1000)
 
 
@@ -243,8 +238,7 @@ def test_text_formatting_function(capsys):
         waste_time()
 
     stdout, stderr = capsys.readouterr()
-    stdout_start, stdout_stop = stdout.strip().split("\n")
-    assert stdout_stop.strip() == "Function: 1"
+    assert stdout.strip() == "Function: 1"
     assert not stderr.strip()
 
 
@@ -266,8 +260,7 @@ def test_text_formatting_class(capsys):
         waste_time()
 
     stdout, stderr = capsys.readouterr()
-    stdout_start, stdout_stop = stdout.strip().split("\n")
-    assert stdout_stop.strip() == "Class: 1"
+    assert stdout.strip() == "Class: 1"
     assert not stderr.strip()
 
     def format_text(seconds):
@@ -278,8 +271,7 @@ def test_text_formatting_class(capsys):
         waste_time()
 
     stdout, stderr = capsys.readouterr()
-    stdout_start, stdout_stop = stdout.strip().split("\n")
-    assert stdout_stop.strip() == "Callable: 1"
+    assert stdout.strip() == "Callable: 1"
     assert not stderr.strip()
 
 
