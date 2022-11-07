@@ -26,19 +26,22 @@ class Timer(ContextDecorator):
     timers: ClassVar[Timers] = Timers()
     _start_time: Optional[float] = field(default=None, init=False, repr=False)
     name: Optional[str] = None
+    initial_text: Optional[Union[bool, str]] = False
     text: Union[str, Callable[[float], str]] = "Elapsed time: {:0.4f} seconds"
     logger: Optional[Callable[[str], None]] = print
     last: float = field(default=math.nan, init=False, repr=False)
 
     def start(self) -> None:
         """Start a new timer."""
-        # Generate timer init statement for logger.
-        if self.logger:
-            if self.name:
-                text = f"Timer {self.name} started..."
+        if self.logger and self.initial_text:
+            # Generate timer init statement for logger.
+            if isinstance(self.initial_text, str):
+                # To include timer name in text, include {name} within string (not as f-string!).
+                initial_text = self.initial_text.format(name=self.name)
             else:
-                text = "Timer started..."
-            self.logger(text)
+                # If no custom strin is specified print a default statement.
+                initial_text = "Timer started"
+            self.logger(initial_text)
 
         if self._start_time is not None:
             raise TimerError("Timer is running. Use .stop() to stop it")
