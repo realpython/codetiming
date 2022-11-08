@@ -27,6 +27,7 @@ class Timer(ContextDecorator):
     _start_time: Optional[float] = field(default=None, init=False, repr=False)
     name: Optional[str] = None
     text: Union[str, Callable[[float], str]] = "Elapsed time: {:0.4f} seconds"
+    initial_text: Union[bool, str] = False
     logger: Optional[Callable[[str], None]] = print
     last: float = field(default=math.nan, init=False, repr=False)
 
@@ -34,6 +35,16 @@ class Timer(ContextDecorator):
         """Start a new timer."""
         if self._start_time is not None:
             raise TimerError("Timer is running. Use .stop() to stop it")
+
+        # Log initial text when timer starts
+        if self.logger and self.initial_text:
+            if isinstance(self.initial_text, str):
+                initial_text = self.initial_text.format(name=self.name)
+            elif self.name:
+                initial_text = "Timer {name} started".format(name=self.name)
+            else:
+                initial_text = "Timer started"
+            self.logger(initial_text)
 
         self._start_time = time.perf_counter()
 

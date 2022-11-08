@@ -55,7 +55,8 @@ You can use `codetiming.Timer` in several different ways:
 `Timer` accepts the following arguments when it's created. All arguments are optional:
 
 - **`name`:** An optional name for your timer
-- **`text`:** The text shown when your timer ends. It should contain a `{}` placeholder that will be filled by the elapsed time in seconds (default: `"Elapsed time: {:.4f} seconds"`)
+- **`text`:** The text that's shown when your timer ends. It should contain a `{}` placeholder that will be filled by the elapsed time in seconds (default: `"Elapsed time: {:.4f} seconds"`)
+- **`initial_text`:** Show text when your timer starts. You may provide the string to be logged or `True` to show the default text `"Timer {name} started"` (default: `False`)
 - **`logger`:** A function/callable that takes a string argument and will report the elapsed time when the logger is stopped (default: `print()`)
 
 You can turn off explicit reporting of the elapsed time by setting `logger=None`.
@@ -81,12 +82,20 @@ t = Timer(text=lambda secs: f"{secs / 86400:.0f} days")
 
 This allows you to use third-party libraries like [`humanfriendly`](https://pypi.org/project/humanfriendly/) to do the text formatting:
 
-```
+```python
 from humanfriendly import format_timespan
 
 t1 = Timer(text=format_timespan)
 t2 = Timer(text=lambda secs: f"Elapsed time: {format_timespan(secs)}")
 ```
+
+You may include a text that should be logged when the timer starts by setting `initial_text`:
+
+```python
+t = Timer(initial_text="And so it begins ...")
+```
+
+You can also set `initial_text=True` to use a default initial text.
 
 
 ## Capturing the Elapsed Time
@@ -109,7 +118,7 @@ elapsed_time = t.last
 
 Named timers are made available in the class dictionary `Timer.timers`. The elapsed time will accumulate if the same name or same timer is used several times. Consider the following example:
 
-```python
+```pycon
 >>> import logging
 >>> from codetiming import Timer
 
@@ -133,7 +142,7 @@ The example shows how you can redirect the timer output to the logging module. N
 
 You can also get simple statistics about your named timers. Continuing from the example above:
 
-```python
+```pycon
 >>> Timer.timers.max("example")
 3.5836678670002584
 

@@ -10,9 +10,10 @@
 
 ## Contributors
 
-- [Jan Freyberg](https://github.com/janfreyberg)
 - [Alkatar21](https://github.com/alkatar21)
 - [D.C. Hess](https://github.com/dchess)
+- [Jan Freyberg](https://github.com/janfreyberg)
 - [Mischa Lisovyi](https://github.com/mlisovyi)
+- [Matthew Price](https://github.com/pricemg)
 
 See the [changelog](https://github.com/realpython/codetiming/blob/master/CHANGELOG.md) for more details.
