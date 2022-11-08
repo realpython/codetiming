@@ -7,6 +7,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [1.4.0] - 2022-11-08
+
 ### Added
 
 - `inital_text` parameter which, when present, will use logger to log that timer has been started (by [Matthew Price](https://github.com/pricemg) in [#47])
@@ -62,7 +64,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 Initial version of `codetiming`. Version 1.0.0 corresponds to the code in the tutorial [Python Timer Functions: Three Ways to Monitor Your Code](https://realpython.com/python-timer/).
 
 
-[Unreleased]: https://github.com/realpython/codetiming/compare/v1.3.2...HEAD
+[Unreleased]: https://github.com/realpython/codetiming/compare/v1.4.0...HEAD
+[1.4.0]: https://github.com/realpython/codetiming/compare/v1.3.2...v1.4.0
 [1.3.2]: https://github.com/realpython/codetiming/compare/v1.3.1...v1.3.2
 [1.3.1]: https://github.com/realpython/codetiming/compare/v1.3.0...v1.3.1
 [1.3.0]: https://github.com/realpython/codetiming/compare/v1.2.0...v1.3.0
