@@ -9,12 +9,32 @@ import math
 import time
 from contextlib import ContextDecorator
 from dataclasses import dataclass, field
-from typing import Any, Callable, ClassVar, Optional, Union
+from typing import TYPE_CHECKING, Any, Callable, ClassVar, Optional, Union
 
 # Codetiming imports
 from codetiming._timers import Timers
 
+# Special types, Protocol only works for Python >= 3.8
+if TYPE_CHECKING:  # pragma: nocover
+    # Standard library imports
+    from typing import Protocol, TypeVar
 
+    T = TypeVar("T")
+
+    class FloatArg(Protocol):
+        """Protocol type that allows classes that take one float argument"""
+
+        def __call__(self: T, __seconds: float) -> T:
+            """Callable signature"""
+            ...  # pragma: nocover
+
+else:
+
+    class FloatArg:
+        """Dummy runtime class"""
+
+
+# Timer code
 class TimerError(Exception):
     """A custom exception used to report errors in use of Timer class."""
 
@@ -24,12 +44,12 @@ class Timer(ContextDecorator):
     """Time your code using a class, context manager, or decorator."""
 
     timers: ClassVar[Timers] = Timers()
-    _start_time: Optional[float] = field(default=None, init=False, repr=False)
     name: Optional[str] = None
-    text: Union[str, Callable[[float], str]] = "Elapsed time: {:0.4f} seconds"
-    initial_text: Union[bool, str] = False
+    text: Union[str, FloatArg, Callable[[float], str]] = "Elapsed time: {:0.4f} seconds"
+    initial_text: Union[bool, str, FloatArg] = False
     logger: Optional[Callable[[str], None]] = print
     last: float = field(default=math.nan, init=False, repr=False)
+    _start_time: Optional[float] = field(default=None, init=False, repr=False)
 
     def start(self) -> None:
         """Start a new timer."""
@@ -69,7 +89,7 @@ class Timer(ContextDecorator):
                     "minutes": self.last / 60,
                 }
                 text = self.text.format(self.last, **attributes)
-            self.logger(text)
+            self.logger(str(text))
         if self.name:
             self.timers.add(self.name, self.last)
 

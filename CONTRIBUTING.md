@@ -50,7 +50,7 @@ Run tests using [`tox`](https://tox.readthedocs.io/). You can also run individua
 - Static type hinting using [`mypy`](http://mypy-lang.org/). Test your type hints as follows:
 
     ```console
-    $ mypy --strict codetiming/
+    $ mypy --strict codetiming/ tests/
     ```
 
     See Real Python's [Python Type Checking guide](https://realpython.com/python-type-checking/) for more information.
