@@ -26,28 +26,25 @@ class Timer(ContextDecorator):
     timers: ClassVar[Timers] = Timers()
     _start_time: Optional[float] = field(default=None, init=False, repr=False)
     name: Optional[str] = None
-    initial_text: Optional[Union[bool, str]] = False
     text: Union[str, Callable[[float], str]] = "Elapsed time: {:0.4f} seconds"
+    initial_text: Union[bool, str] = False
     logger: Optional[Callable[[str], None]] = print
     last: float = field(default=math.nan, init=False, repr=False)
 
     def start(self) -> None:
         """Start a new timer."""
-        if self.logger and self.initial_text:
-            # Generate timer init statement for logger.
-            if isinstance(self.initial_text, str):
-                # To include timer name in text, include {name} within string (not as f-string!).
-                initial_text = self.initial_text.format(name=self.name)
-            elif self.name:
-                # If no custom string specified print a default statement using timer name.
-                initial_text = "Timer {name} started".format(name=self.name)
-            else:
-                # If no custom string or timer name is specified print a default statement.
-                initial_text = "Timer started"
-            self.logger(initial_text)
-
         if self._start_time is not None:
             raise TimerError("Timer is running. Use .stop() to stop it")
+
+        # Log initial text when timer starts
+        if self.logger and self.initial_text:
+            if isinstance(self.initial_text, str):
+                initial_text = self.initial_text.format(name=self.name)
+            elif self.name:
+                initial_text = "Timer {name} started".format(name=self.name)
+            else:
+                initial_text = "Timer started"
+            self.logger(initial_text)
 
         self._start_time = time.perf_counter()
 

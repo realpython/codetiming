@@ -14,13 +14,17 @@ import pytest
 from codetiming import Timer, TimerError
 
 #
-# Test functions
+# Constants, functions, and classes used by tests
 #
 TIME_PREFIX = "Wasted time:"
 TIME_MESSAGE = f"{TIME_PREFIX} {{:.4f}} seconds"
 RE_TIME_MESSAGE = re.compile(TIME_PREFIX + r" 0\.\d{4} seconds")
-RE_TIME_MESSAGE_INITIAL_TEXT_TRUE = re.compile("Timer started\n" + TIME_PREFIX + r" 0\.\d{4} seconds")
-RE_TIME_MESSAGE_INITIAL_TEXT_CUSTOM = re.compile("Starting the party\n" + TIME_PREFIX + r" 0\.\d{4} seconds")
+RE_TIME_MESSAGE_INITIAL_TEXT_TRUE = re.compile(
+    f"Timer started\n{TIME_PREFIX}" + r" 0\.\d{4} seconds"
+)
+RE_TIME_MESSAGE_INITIAL_TEXT_CUSTOM = re.compile(
+    f"Starting the party\n{TIME_PREFIX}" + r" 0\.\d{4} seconds"
+)
 
 
 def waste_time(num=1000):
@@ -40,7 +44,7 @@ def decorated_timewaste_initial_text_true(num=1000):
     sum(n**2 for n in range(num))
 
 
-@Timer(text=TIME_MESSAGE, initial_text='Starting the party')
+@Timer(text=TIME_MESSAGE, initial_text="Starting the party")
 def decorated_timewaste_initial_text_custom(num=1000):
     """Just waste a little bit of time."""
     sum(n**2 for n in range(num))
@@ -68,8 +72,9 @@ class CustomLogger:
 # Tests
 #
 def test_timer_as_decorator(capsys):
-    """Test that decorated function prints timing informatio."""
+    """Test that decorated function prints timing information."""
     decorated_timewaste()
+
     stdout, stderr = capsys.readouterr()
     assert RE_TIME_MESSAGE.match(stdout)
     assert stdout.count("\n") == 1
@@ -80,6 +85,7 @@ def test_timer_as_context_manager(capsys):
     """Test that timed context prints timing information."""
     with Timer(text=TIME_MESSAGE):
         waste_time()
+
     stdout, stderr = capsys.readouterr()
     assert RE_TIME_MESSAGE.match(stdout)
     assert stdout.count("\n") == 1
@@ -92,6 +98,7 @@ def test_explicit_timer(capsys):
     t.start()
     waste_time()
     t.stop()
+
     stdout, stderr = capsys.readouterr()
     assert RE_TIME_MESSAGE.match(stdout)
     assert stdout.count("\n") == 1
@@ -210,16 +217,18 @@ def test_using_name_in_text_without_explicit_timer(capsys):
 
     stdout, stderr = capsys.readouterr()
     assert re.match(f"{name}: " + r"0\.\d{2}", stdout)
+    assert stderr == ""
 
 
 def test_using_name_in_text_with_explicit_timer(capsys):
-    """Test that the name of the timer and the seconds attribute can be referenced in the text."""
+    """Test that timer name and seconds attribute can be referenced in the text."""
     name = "NamedTimer"
     with Timer(name=name, text="{name}: {seconds:.2f}"):
         waste_time()
 
     stdout, stderr = capsys.readouterr()
     assert re.match(f"{name}: " + r"0\.\d{2}", stdout.strip())
+    assert stderr == ""
 
 
 def test_using_minutes_attribute_in_text(capsys):
@@ -229,6 +238,7 @@ def test_using_minutes_attribute_in_text(capsys):
 
     stdout, stderr = capsys.readouterr()
     assert stdout.strip() == "0.0 minutes"
+    assert stderr == ""
 
 
 def test_using_milliseconds_attribute_in_text(capsys):
@@ -239,6 +249,7 @@ def test_using_milliseconds_attribute_in_text(capsys):
     stdout, stderr = capsys.readouterr()
     milliseconds, _, seconds = stdout.partition(" ")
     assert int(milliseconds) == round(float(seconds) * 1000)
+    assert stderr == ""
 
 
 def test_text_formatting_function(capsys):
@@ -275,17 +286,6 @@ def test_text_formatting_class(capsys):
 
     stdout, stderr = capsys.readouterr()
     assert stdout.strip() == "Class: 1"
-    assert not stderr.strip()
-
-    def format_text(seconds):
-        """Callable that returns a formatted text."""
-        return f"Callable: {seconds + 1:.0f}"
-
-    with Timer(text=format_text):
-        waste_time()
-
-    stdout, stderr = capsys.readouterr()
-    assert stdout.strip() == "Callable: 1"
     assert not stderr.strip()
 
 
@@ -344,8 +344,9 @@ def test_setting_timers_exception():
 
 
 def test_timer_as_decorator_with_initial_text_true(capsys):
-    """Test that decorated function prints timing information with default initial text."""
+    """Test that decorated function prints at start with default initial text."""
     decorated_timewaste_initial_text_true()
+
     stdout, stderr = capsys.readouterr()
     assert RE_TIME_MESSAGE_INITIAL_TEXT_TRUE.match(stdout)
     assert stdout.count("\n") == 2
@@ -353,9 +354,10 @@ def test_timer_as_decorator_with_initial_text_true(capsys):
 
 
 def test_timer_as_context_manager_with_initial_text_true(capsys):
-    """Test that timed context prints timing information with default initial text."""
+    """Test that timed context prints at start with default initial text."""
     with Timer(text=TIME_MESSAGE, initial_text=True):
         waste_time()
+
     stdout, stderr = capsys.readouterr()
     assert RE_TIME_MESSAGE_INITIAL_TEXT_TRUE.match(stdout)
     assert stdout.count("\n") == 2
@@ -363,11 +365,12 @@ def test_timer_as_context_manager_with_initial_text_true(capsys):
 
 
 def test_explicit_timer_with_initial_text_true(capsys):
-    """Test that timed section prints timing information with default initial text."""
+    """Test that timed section prints at start with default initial text."""
     t = Timer(text=TIME_MESSAGE, initial_text=True)
     t.start()
     waste_time()
     t.stop()
+
     stdout, stderr = capsys.readouterr()
     assert RE_TIME_MESSAGE_INITIAL_TEXT_TRUE.match(stdout)
     assert stdout.count("\n") == 2
@@ -375,8 +378,9 @@ def test_explicit_timer_with_initial_text_true(capsys):
 
 
 def test_timer_as_decorator_with_initial_text_custom(capsys):
-    """Test that decorated function prints timing information with custom initial text."""
+    """Test that decorated function prints at start with custom initial text."""
     decorated_timewaste_initial_text_custom()
+
     stdout, stderr = capsys.readouterr()
     assert RE_TIME_MESSAGE_INITIAL_TEXT_CUSTOM.match(stdout)
     assert stdout.count("\n") == 2
@@ -384,9 +388,10 @@ def test_timer_as_decorator_with_initial_text_custom(capsys):
 
 
 def test_timer_as_context_manager_with_initial_text_custom(capsys):
-    """Test that timed context prints timing information with custom initial text."""
-    with Timer(text=TIME_MESSAGE, initial_text='Starting the party'):
+    """Test that timed context prints at start with custom initial text."""
+    with Timer(text=TIME_MESSAGE, initial_text="Starting the party"):
         waste_time()
+
     stdout, stderr = capsys.readouterr()
     assert RE_TIME_MESSAGE_INITIAL_TEXT_CUSTOM.match(stdout)
     assert stdout.count("\n") == 2
@@ -394,11 +399,12 @@ def test_timer_as_context_manager_with_initial_text_custom(capsys):
 
 
 def test_explicit_timer_with_initial_text_custom(capsys):
-    """Test that timed section prints timing information with custom initial text."""
-    t = Timer(text=TIME_MESSAGE, initial_text='Starting the party')
+    """Test that timed section prints at start with custom initial text."""
+    t = Timer(text=TIME_MESSAGE, initial_text="Starting the party")
     t.start()
     waste_time()
     t.stop()
+
     stdout, stderr = capsys.readouterr()
     assert RE_TIME_MESSAGE_INITIAL_TEXT_CUSTOM.match(stdout)
     assert stdout.count("\n") == 2
@@ -407,23 +413,26 @@ def test_explicit_timer_with_initial_text_custom(capsys):
 
 def test_explicit_timer_with_initial_text_true_with_name(capsys):
     """Test with default initial text referencing timer name."""
-    t = Timer(name='named', text=TIME_MESSAGE, initial_text=True)
+    t = Timer(name="named", text=TIME_MESSAGE, initial_text=True)
     t.start()
     waste_time()
     t.stop()
+
     stdout, stderr = capsys.readouterr()
-    assert re.compile("Timer named started\n" + TIME_PREFIX + r" 0\.\d{4} seconds").match(stdout)
+    assert re.match(
+        f"Timer named started\n{TIME_PREFIX}" + r" 0\.\d{4} seconds", stdout
+    )
     assert stdout.count("\n") == 2
     assert stderr == ""
 
 
-
 def test_explicit_timer_with_initial_text_with_name(capsys):
     """Test with custom initial text referencing timer name."""
-    t = Timer(name='the party', text=TIME_MESSAGE, initial_text='Starting {name}')
+    t = Timer(name="the party", text=TIME_MESSAGE, initial_text="Starting {name}")
     t.start()
     waste_time()
     t.stop()
+
     stdout, stderr = capsys.readouterr()
     assert RE_TIME_MESSAGE_INITIAL_TEXT_CUSTOM.match(stdout)
     assert stdout.count("\n") == 2

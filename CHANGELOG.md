@@ -9,8 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Added
 
-- `inital_text` attribute to `Timer` class, which when present will use logger
-  to log that timer has been started (by [Matthew Price](https://github.com/pricemg) in [#47])
+- `inital_text` parameter which, when present, will use logger to log that timer has been started (by [Matthew Price](https://github.com/pricemg) in [#47])
 
 ## [1.3.2] - 2022-10-07
 
@@ -45,7 +44,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Changed
 
-- `Timer.timers` changed from regular to `dict` to a custom dictionary supporting basic statistics for named timers ([#23]).
+- `Timer.timers` changed from regular `dict` to a custom dictionary supporting basic statistics for named timers ([#23]).
 
 
 ## [1.1.0] - 2020-01-15
@@ -86,3 +85,4 @@ Initial version of `codetiming`. Version 1.0.0 corresponds to the code in the tu
 [#35]: https://github.com/realpython/codetiming/pull/35
 [#38]: https://github.com/realpython/codetiming/pull/38
 [#46]: https://github.com/realpython/codetiming/pull/46
+[#47]: https://github.com/realpython/codetiming/pull/47
