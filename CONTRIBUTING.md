@@ -26,24 +26,20 @@ Do you want to contribute code to `codetiming`? Fantastic! We welcome contributi
 
 ## Setting Up Your Environment
 
-`codetiming` uses [`flit`](https://flit.readthedocs.io) for package management. You should first install `flit`:
+`codetiming` uses [`flit`](https://flit.readthedocs.io) for package management. You can use `flit` through [`pip`](https://realpython.com/what-is-pip/).
+
+You can then install `codetiming` locally for development with `pip`:
 
 ```
-$ python -m pip install flit
+$ python -m pip install --editable .[dev,test]
 ```
 
-You can then install `codetiming` locally for development with `flit`:
-
-```
-$ python -m flit install --pth-file --deps all
-```
-
-This will install `codetiming` and all its dependencies, including development tools like [`black`](https://black.readthedocs.io) and [`mypy`](http://mypy-lang.org/). The `--pth-file` option allows you to test your changes without reinstalling. On Linux and Mac, you can use `--symlink` for the same effect.
+This will install `codetiming` and all its dependencies, including development tools like [`black`](https://black.readthedocs.io) and [`mypy`](http://mypy-lang.org/), and test runners like [`pytest`](https://docs.pytest.org/). The `--editable` option allows you to test your changes without reinstalling.
 
 
 ## Running Tests
 
-Run tests using [`tox`](https://tox.readthedocs.io/). `tox` helps to enforce the following principles:
+Run tests using [`tox`](https://tox.readthedocs.io/). You can also run individual tests manually. `tox` helps to enforce the following principles:
 
 - Consistent code style using [`black`](https://black.readthedocs.io). You can automatically format your code as follows:
 
@@ -62,10 +58,10 @@ Run tests using [`tox`](https://tox.readthedocs.io/). `tox` helps to enforce the
 - Unit testing using [`pytest`](https://docs.pytest.org/). You can run your tests and see a coverage report as follows:
 
     ```console
-    $ pytest --cov=codetiming --cov-report=term-missing
+    $ python -m pytest --cov=codetiming --cov-report=term-missing
     ```
 
-- Code issues are checked with the [flake8]() linter. You can run flake8 manually as follows:
+- Code issues are checked with the [flake8](https://flake8.pycqa.org/) linter. You can run flake8 manually as follows:
 
     ```console
     $ python -m flake8 codetiming/ tests/
@@ -80,7 +76,7 @@ Run tests using [`tox`](https://tox.readthedocs.io/). `tox` helps to enforce the
 - All modules, functions, classes, and methods must have docstrings. This is enforced by [Interrogation](https://interrogate.readthedocs.io/). You can test compliance as follows:
 
     ```console
-    $ interrogate -c pyproject.toml -vv
+    $ python -m interrogate -c pyproject.toml -vv
     ```
 
 Feel free to ask for help in your PR if you are having challenges with any of these tests.
