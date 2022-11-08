@@ -7,6 +7,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+- Drop explicit support for Python 3.6 ([#48])
+
 ## [1.4.0] - 2022-11-08
 
 ### Added
@@ -73,19 +77,20 @@ Initial version of `codetiming`. Version 1.0.0 corresponds to the code in the tu
 [1.1.0]: https://github.com/realpython/codetiming/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/realpython/codetiming/releases/tag/v1.0.0
 
-[#13]: https://github.com/realpython/codetiming/pull/13
-[#17]: https://github.com/realpython/codetiming/pull/17
-[#18]: https://github.com/realpython/codetiming/pull/18
-[#23]: https://github.com/realpython/codetiming/pull/23
-[#24]: https://github.com/realpython/codetiming/issues/24
-[#25]: https://github.com/realpython/codetiming/pull/25
-[#27]: https://github.com/realpython/codetiming/pull/27
-[#29]: https://github.com/realpython/codetiming/issues/29
-[#30]: https://github.com/realpython/codetiming/pull/30
-[#32]: https://github.com/realpython/codetiming/pull/32
-[#33]: https://github.com/realpython/codetiming/pull/33
-[#34]: https://github.com/realpython/codetiming/pull/34
-[#35]: https://github.com/realpython/codetiming/pull/35
-[#38]: https://github.com/realpython/codetiming/pull/38
-[#46]: https://github.com/realpython/codetiming/pull/46
+[#48]: https://github.com/realpython/codetiming/pull/48
 [#47]: https://github.com/realpython/codetiming/pull/47
+[#46]: https://github.com/realpython/codetiming/pull/46
+[#38]: https://github.com/realpython/codetiming/pull/38
+[#35]: https://github.com/realpython/codetiming/pull/35
+[#34]: https://github.com/realpython/codetiming/pull/34
+[#33]: https://github.com/realpython/codetiming/pull/33
+[#32]: https://github.com/realpython/codetiming/pull/32
+[#30]: https://github.com/realpython/codetiming/pull/30
+[#29]: https://github.com/realpython/codetiming/issues/29
+[#27]: https://github.com/realpython/codetiming/pull/27
+[#25]: https://github.com/realpython/codetiming/pull/25
+[#24]: https://github.com/realpython/codetiming/issues/24
+[#23]: https://github.com/realpython/codetiming/pull/23
+[#18]: https://github.com/realpython/codetiming/pull/18
+[#17]: https://github.com/realpython/codetiming/pull/17
+[#13]: https://github.com/realpython/codetiming/pull/13
