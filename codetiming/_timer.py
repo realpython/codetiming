@@ -9,23 +9,32 @@ import math
 import time
 from contextlib import ContextDecorator
 from dataclasses import dataclass, field
-from typing import Any, Callable, ClassVar, Optional, Protocol, TypeVar, Union
+from typing import TYPE_CHECKING, Any, Callable, ClassVar, Optional, Union
 
 # Codetiming imports
 from codetiming._timers import Timers
 
-# Special types
-T = TypeVar("T")
+# Special types, Protocol only works for Python >= 3.8
+if TYPE_CHECKING:  # pragma: nocover
+    # Standard library imports
+    from typing import Protocol, TypeVar
+
+    T = TypeVar("T")
+
+    class FloatArg(Protocol):
+        """Protocol type that allows classes that take one float argument"""
+
+        def __call__(self: T, __seconds: float) -> T:
+            """Callable signature"""
+            ...  # pragma: nocover
+
+else:
+
+    class FloatArg:
+        """Dummy runtime class"""
 
 
-class FloatArg(Protocol):
-    """Protocol type that allows classes that take one float argument"""
-
-    def __call__(self: T, __seconds: float) -> T:
-        """Callable signature"""
-        ...  # pragma: nocover
-
-
+# Timer code
 class TimerError(Exception):
     """A custom exception used to report errors in use of Timer class."""
 
