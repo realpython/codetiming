@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Changed
 
+- Add type hints to tests ([#50])
 - Drop explicit support for Python 3.6 ([#48])
 
 ## [1.4.0] - 2022-11-08
@@ -77,6 +78,7 @@ Initial version of `codetiming`. Version 1.0.0 corresponds to the code in the tu
 [1.1.0]: https://github.com/realpython/codetiming/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/realpython/codetiming/releases/tag/v1.0.0
 
+[#50]: https://github.com/realpython/codetiming/pull/50
 [#48]: https://github.com/realpython/codetiming/pull/48
 [#47]: https://github.com/realpython/codetiming/pull/47
 [#46]: https://github.com/realpython/codetiming/pull/46
