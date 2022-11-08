@@ -18,7 +18,6 @@ classifiers = [
     "Operating System :: MacOS",
     "Operating System :: Microsoft",
     "Operating System :: POSIX :: Linux",
-    "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
@@ -30,8 +29,8 @@ classifiers = [
     "Typing :: Typed",
 ]
 keywords = ["timer", "class", "contextmanager", "decorator"]
-requires-python = ">=3.6"
-dependencies = ["dataclasses; python_version < '3.7'"]
+requires-python = ">=3.7"
+dependencies = []
 
 [project.urls]
 Homepage      = "https://realpython.com/python-timer"
